@@ -1,0 +1,19 @@
+@startuml
+
+participant PyGame as pg
+participant "Board.run()" as board
+participant cpu.py as cpu
+participant game.py as game
+
+board -> pg : pg.event.get()
+pg -> board : (a list of input events)
+board -> game : human player: Game.place_move(row, col)
+game -> board : ret True if valid, False otherwise
+board -> cpu : cpu = Cpu()
+cpu -> board : (Cpu instance)
+board -> cpu : cpu.find_best_move()
+cpu -> board : (best move in (row, col) format)
+board -> game : computer player: Game.place_move(row, col)
+game -> board : ret True if valid, False otherwise
+
+@enduml
